@@ -3,8 +3,10 @@ package jp.ac.it_college.std.s22024.menusmaple
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
         initList(binding.lvMenu)
     }
 
@@ -27,12 +30,15 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         view.layoutManager = layoutManager
         view.addItemDecoration(DividerItemDecoration(this, layoutManager.orientation))
+
+        registerForContextMenu(view)
     }
 
     private fun order(name: String, price: Int) {
+        // 画面遷移のコード
         startActivity(Intent(this, MenuThanksActivity::class.java).apply {
             putExtra("menuName", name)
-            putExtra("menuprice", price)
+            putExtra("menuPrice", price)
         })
     }
 
@@ -56,5 +62,17 @@ class MainActivity : AppCompatActivity() {
         menuList.addAll(list)
         binding.lvMenu.adapter?.notifyDataSetChanged()
         return true
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+        menuInflater.inflate(R.menu.menu_context_menu_list, menu)
+
+        menu?.setHeaderTitle(R.string.menu_list_context_header)
     }
 }

@@ -17,7 +17,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     <TextView
         android:id="@+id/tvThxDesc"
@@ -47,8 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/tvMenuYen"
-        app:layout_constraintTop_toBottomOf="@+id/tvThxDesc"
+        app:layout_constraintEnd_toStartOf="@id/tvMenuYen"
+        app:layout_constraintTop_toBottomOf="@id/tvThxDesc"
         tools:text="850" />
 
     <Button
@@ -73,4 +73,17 @@
         android:text="@string/tv_menu_unit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvThxDesc" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/app_name"
+        app:titleTextColor="?attr/colorSurface" />
 </androidx.constraintlayout.widget.ConstraintLayout>
