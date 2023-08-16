@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import jp.ac.it_college.std.s22024.fragmantsample.databinding.FragmentMenuThanksBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -12,11 +13,8 @@ import jp.ac.it_college.std.s22024.fragmantsample.databinding.FragmentMenuThanks
 internal const val ARG_NAME = "menuName"
 internal const val ARG_PRICE = "menuPrice"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MenuThanksFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+internal const val REQUEST_BACK_MENU = "backMenu"
+
 class MenuThanksFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var _binding: FragmentMenuThanksBinding? = null
@@ -30,7 +28,7 @@ class MenuThanksFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMenuThanksBinding.inflate(inflater, container, false)
             return binding.root
     }
@@ -53,7 +51,7 @@ class MenuThanksFragment : Fragment() {
     }
 
     private fun onBackButtonClick(v: View) {
-        parentFragmentManager.popBackStack()
+        parentFragmentManager.setFragmentResult(REQUEST_BACK_MENU, bundleOf())
     }
 
 }

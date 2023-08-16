@@ -14,19 +14,44 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.setFragmentResultListener(REQUEST_SELECTED_MENU, this, ::onselectedMenu)
+        supportFragmentManager.run {
+            setFragmentResultListener(
+                REQUEST_SELECTED_MENU, this@MainActivity, ::onselectedMenu
+            )
+            setFragmentResultListener(
+                REQUEST_BACK_MENU, this@MainActivity, ::onBackMenu
+            )
+        }
     }
+
     private fun onselectedMenu(requestKey: String, bundle: Bundle) {
         Log.i("SELECTED_MENU", "requestKey: ${requestKey}, bundle: ${bundle}.")
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            addToBackStack("Only List")
-            replace(R.id.fragmentMainContainer, MenuThanksFragment ::class.java,bundle)
-            bundleOf(
+            val args = bundleOf(
                 ARG_NAME to bundle.getString(RESULT_NAME, ""),
                 ARG_PRICE to bundle.getInt(RESULT_PRICE, 0)
             )
+
+            if (binding.fragmentMainContainer != null) {
+                addToBackStack("Only List")
+                replace(R.id.fragmentMainContainer, MenuThanksFragment::class.java, args)
+            } else {
+                replace(R.id.fragmentThanksContainer, MenuThanksFragment::class.java, args)
+            }
+        }
+    }
+
+    private fun onBackMenu(requestKey: String, bundle: Bundle) {
+        if (binding.fragmentMainContainer != null) {
+            supportFragmentManager.popBackStack()
+        } else {
+            supportFragmentManager.commit {
+                binding.fragmentThanksContainer?.let {
+                    remove(it.getFragment())
+                }
+            }
         }
     }
 }
